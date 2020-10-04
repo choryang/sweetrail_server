@@ -12,7 +12,7 @@ exports.register = (req, res) => {
 
   Users.create(user)
     .then((data) => {
-      res.send({ message: "success" });
+      res.send({ registerSuccess: true });
     })
     .catch((err) => {
       res.status(500).send({
