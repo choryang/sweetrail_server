@@ -45,7 +45,7 @@ module.exports = (sequelize, Sequelize) => {
   Users.prototype.comparePassword = function (plainPassword, cb) {
     //plainPassword 1234567를 암호화된 비번과 비교
     bcrypt.compare(plainPassword, this.password, function (err, isMatch) {
-      if (err) return cb(err);
+      if (err) return cb(err, false);
       return cb(null, isMatch);
     });
   };

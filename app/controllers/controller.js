@@ -32,21 +32,28 @@ exports.login = (req, res) => {
           message: "비밀번호가 틀렸습니다.",
         });
       }
-    });
-
-    userInfo.generateToken((err, tok) => {
-      //토큰을 쿠키, 로컬스토리지, 아무튼 여러군데 저장 가능
-      Users.update({ token: tok }, { where: { email: req.body.email } }) //토큰이 지정한 스트링 길이보다 훨씬 길어서 안되는 거였음
-        .then(() => {
-          //res.send({ message: "success" });
-          res.cookie("x_auth", tok).status(200).json({
-            loginSuccess: true,
-            userId: userInfo.id,
-          });
-        })
-        .catch((err) => {
-          return res.status(400).send(err);
+      else {
+        userInfo.generateToken((err, tok) => {
+          //토큰을 쿠키, 로컬스토리지, 아무튼 여러군데 저장 가능
+          Users.update({ token: tok }, { where: { email: req.body.email } }) //토큰이 지정한 스트링 길이보다 훨씬 길어서 안되는 거였음
+            .then(() => {
+              //res.send({ message: "success" });
+              res.cookie("x_auth", tok).status(200).json({
+                loginSuccess: true,
+                userId: userInfo.id,
+              });
+            })
+            .catch((err) => {
+              return res.status(400).send(err);
+            });
         });
+      }
+    });
+  })
+  .catch((err) => {
+    return res.json({
+      NoExistedUser: true,
+      message: err.massage || "존재하지 않는 사용자입니다.",
     });
   });
 };
