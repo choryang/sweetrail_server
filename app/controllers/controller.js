@@ -1,8 +1,6 @@
 const db = require("../models");
 const Users = db.users;
-const Op = db.Sequelize.Op;
 
-// Create and Save a new Tutorial
 exports.register = (req, res) => {
   const user = {
     name: req.body.name,
@@ -54,7 +52,7 @@ exports.login = (req, res) => {
   .catch((err) => {
     return res.json({
       NoExistedUser: true,
-      message: err.massage || "존재하지 않는 사용자입니다.",
+      message: err.massage || "Some error occurred while logging in the User.",
     });
   });
 };

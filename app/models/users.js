@@ -1,6 +1,5 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { users } = require(".");
 const saltRounds = 10; //salt가 몇자리인지 정함
 module.exports = (sequelize, Sequelize) => {
   const Users = sequelize.define(
