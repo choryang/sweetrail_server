@@ -3,9 +3,6 @@ module.exports = (app) => {
   const { auth } = require("../middleware/auth.js");
   var router = require("express").Router();
 
-  // Retrieve all Tutorials
-  router.get("/", (req, res) => res.send("Hello World"));
-
   router.post("/api/user/register", user.register);
 
   router.post("/api/user/login", user.login);

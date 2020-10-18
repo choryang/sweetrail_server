@@ -23,6 +23,12 @@ module.exports = (sequelize, Sequelize) => {
       token: {
         type: Sequelize.STRING(200),
       },
+      lifestyle: {
+        type: Sequelize.STRING(50),
+      },
+      journeytype: {
+        type: Sequelize.STRING(50),
+      }
     },
     {
       timestamps: false,

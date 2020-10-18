@@ -8,6 +8,8 @@ exports.register = (req, res) => {
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
+    lifestyle: req.body.lifestyle,
+    journeytype: req.body.journeytype,
   };
 
   Users.create(user)
@@ -24,7 +26,6 @@ exports.register = (req, res) => {
 exports.login = (req, res) => {
   //요청된 이메일을 데이터베이스에 있는지 찾는다
   Users.findOne({ where: { email: req.body.email } }).then((userInfo) => {
-    //findOne promise임... 인스터스 생성 안돼서 함수 실행 안되는 거였음
     userInfo.comparePassword(req.body.password, (err, isMatch) => {
       if (!isMatch) {
         return res.json({
@@ -35,7 +36,7 @@ exports.login = (req, res) => {
       else {
         userInfo.generateToken((err, tok) => {
           //토큰을 쿠키, 로컬스토리지, 아무튼 여러군데 저장 가능
-          Users.update({ token: tok }, { where: { email: req.body.email } }) //토큰이 지정한 스트링 길이보다 훨씬 길어서 안되는 거였음
+          Users.update({ token: tok }, { where: { email: req.body.email } })
             .then(() => {
               //res.send({ message: "success" });
               res.cookie("x_auth", tok).status(200).json({
