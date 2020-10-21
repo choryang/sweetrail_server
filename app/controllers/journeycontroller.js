@@ -6,3 +6,9 @@ exports.publicJour = (req, res) => {
         res.send(jourInfo);
     })
 }
+
+exports.jourDetail = (req, res) => {
+    Journeys.findByPk(req.params.id).then((jourInfo) => {
+        res.send(jourInfo);
+    })
+}

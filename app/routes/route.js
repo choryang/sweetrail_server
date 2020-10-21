@@ -14,5 +14,7 @@ module.exports = (app) => {
 
   router.get("/api/journey/main", journey.publicJour);
 
+  router.get("/api/journey/detail/:id", journey.jourDetail);
+
   app.use("/", router);
 };
