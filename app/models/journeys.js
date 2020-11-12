@@ -1,8 +1,11 @@
 module.exports = (sequelize, Sequelize) => {
+    // import Paths from "./paths";
+    // import Scraps from "./scraps";
+
     const Journeys = sequelize.define(
       "journeys",
       {
-        journeyname: {
+        journeyName: {
           type: Sequelize.STRING(50),
           allowNull: false,
           unique: true,
@@ -15,8 +18,8 @@ module.exports = (sequelize, Sequelize) => {
           type: Sequelize.STRING(50),
           allowNull: false,
         },
-        pinfrequency:{
-          type: INTEGER,
+        pinFrequency:{
+          type: Sequelize.INTEGER,
           allowNull: false,
         },
         summary: {
@@ -30,16 +33,27 @@ module.exports = (sequelize, Sequelize) => {
           allowNull: false,
           defaultValue: false
         },
-        sharedflag: {
+        sharedFlag: {
           type: Sequelize.BOOLEAN,
           allowNull: false,
           defaultValue: false
         },
+        userId: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          references: {
+            model: 'users',//table name 
+            key: 'id',//table column
+         }
+        }
       },
       {
         timestamps: false,
       }
     );
     
+    // Journeys.hasMany(Paths);
+    // Journeys.hasMany(Scraps);
+
     return Journeys;
   };

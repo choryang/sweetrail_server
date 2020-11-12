@@ -2,7 +2,7 @@ module.exports = (sequelize, Sequelize) => {
     const Places = sequelize.define(
       "places",
       {
-        placename: {
+        placeName: {
           type: Sequelize.INTEGER,
           allowNull: false,
         },
@@ -32,6 +32,14 @@ module.exports = (sequelize, Sequelize) => {
           allowNull: false,
           defaultValue: false
         },
+        pathsId:{
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          references: {
+            model: 'paths',//table name 
+            key: 'id',//table column
+         }
+        }
       },
       {
         timestamps: false,
