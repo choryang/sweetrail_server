@@ -1,20 +1,18 @@
 module.exports = (sequelize, Sequelize) => {
-    const UserJourneys = sequelize.define(
-      "userjourney",
+    const Scraps = sequelize.define(
+      "scraps",
       {
         userid: {
           type: Sequelize.INTEGER,
+          primaryKey: true,
           allowNull: false,
         },
-        journeyid: {
+        followerid: {
           type: Sequelize.INTEGER,
           allowNull: false,
         },
-      },
-      {
-        timestamps: false,
       }
     );
     
-    return UserJourneys;
+    return Scraps;
   };

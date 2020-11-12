@@ -11,7 +11,12 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const db = require("./app/models");
-db.sequelize.sync();
+//prod
+//db.sequelize.sync();
+//dev
+db.sequelize.sync({ force: true }).then(() => {
+  console.log("Drop and re-sync db.");
+});
 
 require("./app/routes/route")(app);
 

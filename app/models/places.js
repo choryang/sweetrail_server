@@ -1,36 +1,33 @@
 module.exports = (sequelize, Sequelize) => {
-    const Journeys = sequelize.define(
-      "journeys",
+    const Places = sequelize.define(
+      "places",
       {
-        journeyname: {
-          type: Sequelize.STRING(50),
-          allowNull: false,
-          unique: true,
-        },
-        type: {
-          type: Sequelize.STRING(100),
+        placename: {
+          type: Sequelize.INTEGER,
           allowNull: false,
         },
-        accompany: {
+        time: {
           type: Sequelize.STRING(50),
           allowNull: false,
         },
-        pinfrequency:{
-          type: INTEGER,
+        logitude: {
+          type: Sequelize.STRING(50),
           allowNull: false,
         },
-        summary: {
-          type: Sequelize.STRING(200),
+        latitude: {
+          type: Sequelize.STRING(50),
+          allowNull: false,
         },
         image: {
           type: Sequelize.STRING(200),
         },
-        status: {
-          type: Sequelize.BOOLEAN,
-          allowNull: false,
-          defaultValue: false
+        note: {
+          type: Sequelize.STRING(255),
         },
-        sharedflag: {
+        category: {
+          type: Sequelize.STRING(50),
+        },
+        status: {
           type: Sequelize.BOOLEAN,
           allowNull: false,
           defaultValue: false
@@ -41,5 +38,5 @@ module.exports = (sequelize, Sequelize) => {
       }
     );
     
-    return Journeys;
+    return Places;
   };

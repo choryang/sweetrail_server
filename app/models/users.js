@@ -5,7 +5,7 @@ module.exports = (sequelize, Sequelize) => {
   const Users = sequelize.define(
     "users",
     {
-      name: {
+      username: {
         type: Sequelize.STRING(50),
         allowNull: false,
         unique: true,
@@ -27,7 +27,10 @@ module.exports = (sequelize, Sequelize) => {
       },
       journeytype: {
         type: Sequelize.STRING(50),
-      }
+      },
+      image: {
+        type: Sequelize.STRING(200),
+      },
     },
     {
       timestamps: false,
