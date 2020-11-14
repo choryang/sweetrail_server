@@ -1,6 +1,4 @@
 module.exports = (sequelize, Sequelize) => {
-    // import Paths from "./paths";
-    // import Scraps from "./scraps";
 
     const Journeys = sequelize.define(
       "journeys",
@@ -52,8 +50,6 @@ module.exports = (sequelize, Sequelize) => {
       }
     );
     
-    // Journeys.hasMany(Paths);
-    // Journeys.hasMany(Scraps);
 
     return Journeys;
   };

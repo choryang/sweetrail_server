@@ -2,8 +2,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const saltRounds = 10; //salt가 몇자리인지 정함
 module.exports = (sequelize, Sequelize) => {
-  // import Journeys from "./journeys";
-  // import Scraps from "./scraps";
   const Users = sequelize.define(
     "users",
     {
@@ -32,6 +30,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       image: {
         type: Sequelize.STRING(200),
+        defaultValue: "default"
       },
     },
     {
@@ -52,11 +51,8 @@ module.exports = (sequelize, Sequelize) => {
     }
   );
 
-  // Users.hasMany(Journeys);
-  // Users.hasMany(Scraps);
 
   Users.prototype.comparePassword = function (plainPassword, cb) {
-    //plainPassword 1234567를 암호화된 비번과 비교
     bcrypt.compare(plainPassword, this.password, function (err, isMatch) {
       if (err) return cb(err, false);
       return cb(null, isMatch);
