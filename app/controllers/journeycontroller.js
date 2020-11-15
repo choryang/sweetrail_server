@@ -2,7 +2,7 @@ const db = require("../models");
 const Journeys = db.journeys;
 
 exports.publicJour = (req, res) => {
-    Journeys.findAll({where: {public: true}}).then((jourInfo) => {
+    Journeys.findAll({where: {sharedFlag: true}}).then((jourInfo) => {
         res.send(jourInfo);
     })
 }

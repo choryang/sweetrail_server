@@ -43,6 +43,14 @@ module.exports = (sequelize, Sequelize) => {
             model: 'users',//table name 
             key: 'id',//table column
          }
+        },
+        userName: {
+          type: Sequelize.STRING(50),
+          allowNull: false,
+          references: {
+            model: 'users',//table name 
+            key: 'userName',//table column
+         }
         }
       },
       {

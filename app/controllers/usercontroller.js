@@ -65,10 +65,8 @@ exports.login = (req, res) => {
             Users.update({ token: tok }, 
               { 
                 where: { email: req.body.email }, 
-                returning: true,
-                plain: true 
               })
-              .then((result) => {
+              .then(() => {
                 res.cookie("x_auth", tok).status(200).json({
                   loginSuccess: true,
                 });
@@ -124,7 +122,7 @@ exports.profile = (req, res) => {
     })
   }
   else {
-    Users.update({image: `/static/${req.file.filename}`}, 
+    Users.update({image: `static/profile/${req.file.filename}`}, 
     {
       where: {id: req.body.userId},
       returning: true,
@@ -137,6 +135,5 @@ exports.profile = (req, res) => {
       return res.status(400).send(err);
     })
   }
-  //test
   
 };

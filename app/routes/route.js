@@ -13,7 +13,7 @@ module.exports = (app) => {
     }
  });
 
-  var upload = multer({ storage: _storage, limits:{fileSize: 1000000} });
+  var upload = multer({ storage: _storage, limits:{fileSize: 1024 * 1024 * 5} });
   var router = require("express").Router();
 
   router.post("/api/user/register", user.register);
