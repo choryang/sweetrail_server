@@ -22,6 +22,8 @@ module.exports = (app) => {
 
   router.post("/api/user/profile-upload", upload.single("userImg"), user.profile);
 
+  router.post("/api/user/other-user", user.otherUser);
+
   router.get("/api/user/auth", auth, user.auth);
 
   router.get("/api/user/logout", auth, user.logout);

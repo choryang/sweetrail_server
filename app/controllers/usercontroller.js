@@ -137,3 +137,20 @@ exports.profile = (req, res) => {
   }
   
 };
+
+exports.otherUser = (req, res) => {
+  Users.findOne({ where: { id: req.body.id } })
+  .then((userInfo) => {
+    return res.send({
+      userId: userInfo.id,
+      userImg: userInfo.image,
+      userName: userInfo.userName,
+      journeyType: userInfo.journeyType,
+      lifeStyle: userInfo.lifeStyle
+    });
+  })
+  .catch((err) => {
+    return res.status(400).send(err);
+  })
+
+}
