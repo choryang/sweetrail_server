@@ -47,8 +47,8 @@ exports.register = (req, res) => {
 exports.login = (req, res) => {
   //요청된 이메일을 데이터베이스에 있는지 찾는다
   Users.findOne({ where: { email: req.body.email } }).then((userInfo) => {
-    if (!userInfo) {
-      return res.json({
+    if (userInfo === null) {
+      return res.send({
         NoExistedUser: true
       });
     }
@@ -56,7 +56,7 @@ exports.login = (req, res) => {
       userInfo.comparePassword(req.body.password, (err, isMatch) => {
         if (!isMatch) {
           return res.json({
-            loginSuccess: false,
+            isLogin: false,
           });
         }
         else {
@@ -65,10 +65,12 @@ exports.login = (req, res) => {
             Users.update({ token: tok }, 
               { 
                 where: { email: req.body.email }, 
+                returning: true,
+                plain: true
               })
               .then(() => {
                 res.cookie("x_auth", tok).status(200).json({
-                  loginSuccess: true,
+                  isLogin: true,
                 });
               })
               .catch((err) => {
@@ -91,11 +93,7 @@ exports.auth = (req, res) => {
   //여기까지 미들웨어를 통과해서 왔다 == Authentication이 true
   res.status(200).json({
     isAuth: true,
-    userImg: req.user.image,
     userId: req.user.id,
-    userName: req.user.userName,
-    journeyType: req.user.journeyType,
-    lifeStyle: req.user.lifeStyle
   });
 };
 
@@ -138,8 +136,8 @@ exports.profile = (req, res) => {
   
 };
 
-exports.otherUser = (req, res) => {
-  Users.findOne({ where: { id: req.body.id } })
+exports.getUserInfo = (req, res) => {
+  Users.findByPk(req.params.id)
   .then((userInfo) => {
     return res.send({
       userId: userInfo.id,

@@ -22,7 +22,7 @@ module.exports = (app) => {
 
   router.post("/api/user/profile-upload", upload.single("userImg"), user.profile);
 
-  router.post("/api/user/other-user", user.otherUser);
+  router.get("/api/user/user-info/:id", user.getUserInfo);
 
   router.get("/api/user/auth", auth, user.auth);
 
