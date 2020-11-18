@@ -12,3 +12,15 @@ exports.jourDetail = (req, res) => {
         res.send(jourInfo);
     })
 }
+
+exports.myJourney = (req, res) => {
+    Journeys.findAll({where: {userId: req.params.id}}).then((jourInfo) => {
+        res.send(jourInfo);
+    })
+}
+
+exports.otherJourney = (req, res) => {
+    Journeys.findAll({where: {userId: req.params.id, sharedFlag: true}}).then((jourInfo) => {
+        res.send(jourInfo);
+    })
+}

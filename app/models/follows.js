@@ -14,6 +14,7 @@ module.exports = (sequelize, Sequelize) => {
         friend: {
           type: Sequelize.BOOLEAN,
           allowNull: false,
+          defaultValue: true
         },
       },
       {

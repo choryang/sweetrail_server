@@ -65,8 +65,6 @@ exports.login = (req, res) => {
             Users.update({ token: tok }, 
               { 
                 where: { email: req.body.email }, 
-                returning: true,
-                plain: true
               })
               .then(() => {
                 res.cookie("x_auth", tok).status(200).json({
@@ -94,6 +92,10 @@ exports.auth = (req, res) => {
   res.status(200).json({
     isAuth: true,
     userId: req.user.id,
+    userName: req.user.userName,
+    userImg: req.user.image,
+    journeyType: req.user.journeyType,
+    lifeStyle: req.user.lifeStyle,
   });
 };
 

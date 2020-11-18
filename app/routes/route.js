@@ -1,6 +1,7 @@
 module.exports = (app) => {
   const user = require("../controllers/usercontroller.js");
-  const journey = require("../controllers/journeycontroller");
+  const journey = require("../controllers/journeycontroller.js");
+  const follow = require("../controllers/followcontroller.js");
   const { auth } = require("../middleware/auth.js");
   const path = require("path");
   const multer = require("multer");
@@ -30,7 +31,15 @@ module.exports = (app) => {
 
   router.get("/api/journey/main", journey.publicJour);
 
+  router.get("/api/journey/mypage/:id", journey.myJourney);
+
+  router.get("/api/journey/otherpage/:id", journey.otherJourney);
+
   router.get("/api/journey/detail/:id", journey.jourDetail);
+
+  router.post("/api/follow/follow-check", follow.followCheck);
+
+  router.post("/api/follow/set-follow", follow.setFollow);
 
   app.use("/", router);
 };
