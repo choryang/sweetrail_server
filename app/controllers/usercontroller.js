@@ -1,5 +1,17 @@
 const db = require("../models");
 const Users = db.users;
+const path = require("path");
+const multer = require("multer");
+const _storage = multer.diskStorage({
+  destination: function(req, file, cb){
+    cb(null, "uploads/profile/");
+  },
+  filename: function(req, file, cb){
+      cb(null, "PROFILE-" + Date.now() + path.extname(file.originalname));
+  }
+});
+
+var upload = multer({ storage: _storage, limits:{fileSize: 1024 * 1024 * 5} }).single("userImg");
 
 exports.register = (req, res) => {
   const user = {
@@ -92,10 +104,10 @@ exports.auth = (req, res) => {
   res.status(200).json({
     isAuth: true,
     userId: req.user.id,
-    userName: req.user.userName,
+    userName:req.user.userName,
     userImg: req.user.image,
     journeyType: req.user.journeyType,
-    lifeStyle: req.user.lifeStyle,
+    lifeStyle: req.user.lifeStyle
   });
 };
 
@@ -112,30 +124,15 @@ exports.logout = (req, res) => {
 };
 
 exports.profile = (req, res) => {
-  if(req.file === undefined) {
-    Users.update({image: "default"}, { where: {id: req.body.userId}})
-    .then(() => {
-      return res.send({userImg: "default"});
-    })
-    .catch((err) => {
-      return res.status(400).send(err);
-    })
-  }
-  else {
-    Users.update({image: `static/profile/${req.file.filename}`}, 
-    {
-      where: {id: req.body.userId},
-      returning: true,
-      plain: true
-    })
-    .then((result) => {
-      return res.send({userImg: result[0].image});
-    })
-    .catch((err) => {
-      return res.status(400).send(err);
-    })
-  }
-  
+  upload(req, res, function (err) {
+    if (err){
+      console.log(JSON.stringify(err));
+      res.status(400).send('fail saving image');
+    } else {
+      console.log('The filename is ' + res.req.file.filename);
+      return res.send(`static/profile/${res.req.file.filename}`);  
+    }
+  });
 };
 
 exports.getUserInfo = (req, res) => {

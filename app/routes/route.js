@@ -3,25 +3,13 @@ module.exports = (app) => {
   const journey = require("../controllers/journeycontroller.js");
   const follow = require("../controllers/followcontroller.js");
   const { auth } = require("../middleware/auth.js");
-  const path = require("path");
-  const multer = require("multer");
-  const _storage = multer.diskStorage({
-    destination: function(req, file, cb){
-      cb(null, "uploads/profile/");
-   },
-    filename: function(req, file, cb){
-       cb(null, "PROFILE-" + Date.now() + path.extname(file.originalname));
-    }
- });
-
-  var upload = multer({ storage: _storage, limits:{fileSize: 1024 * 1024 * 5} });
   var router = require("express").Router();
 
   router.post("/api/user/register", user.register);
 
   router.post("/api/user/login", user.login);
 
-  router.post("/api/user/profile-upload", upload.single("userImg"), user.profile);
+  router.post("/api/user/profile-upload", user.profile);
 
   router.get("/api/user/user-info/:id", user.getUserInfo);
 
@@ -40,6 +28,16 @@ module.exports = (app) => {
   router.post("/api/follow/follow-check", follow.followCheck);
 
   router.post("/api/follow/set-follow", follow.setFollow);
+
+  router.post("/api/follow/unfollow", follow.unfollow);
+
+  router.get("/api/follow/get-following-list/:id", follow.getFollowingList);
+
+  router.get("/api/follow/get-follower-list/:id", follow.getFollowerList);
+
+  router.get("/api/follow/count-following/:id", follow.countFollowing);
+
+  router.get("/api/follow/count-follower/:id", follow.countFollower);
 
   app.use("/", router);
 };
