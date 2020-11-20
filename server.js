@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/static/profile", express.static("uploads/profile"));
+app.use("/profile", express.static("profile"));
 const db = require("./app/models");
 //prod
 db.sequelize.sync();
