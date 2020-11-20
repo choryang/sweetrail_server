@@ -30,7 +30,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       image: {
         type: Sequelize.STRING(200),
-        defaultValue: `/profile/default.png`
+        defaultValue: `/static/profile/default.png`
       },
     },
     {
