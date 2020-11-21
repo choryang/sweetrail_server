@@ -127,10 +127,14 @@ exports.profile = (req, res) => {
   upload(req, res, function (err) {
     if (err){
       console.log(JSON.stringify(err));
-      res.status(400).send('fail saving image');
+      return res.status(400).send('fail saving image');
     } else {
       console.log('The filename is ' + res.req.file.filename);
-      return res.send(`static/profile/${res.req.file.filename}`);  
+      Users.update({image: `/image/profile/${res.req.file.filename}`}, {where: {id: res.req.body.userId}})
+      .then(() => {return res.send({userImg: `/image/profile/${res.req.file.filename}`})})
+      .catch((err) => {
+        return res.status(400).send(err);
+      });
     }
   });
 };

@@ -32,12 +32,28 @@ module.exports = (sequelize, Sequelize) => {
           allowNull: false,
           defaultValue: false
         },
-        pathsId:{
+        journeysId:{
           type: Sequelize.INTEGER,
           allowNull: false,
           references: {
-            model: 'paths',//table name 
+            model: 'journeys',//table name 
             key: 'id',//table column
+         }
+        },
+        userId: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          references: {
+            model: 'users',//table name 
+            key: 'id',//table column
+         }
+        },
+        userName: {
+          type: Sequelize.STRING(50),
+          allowNull: false,
+          references: {
+            model: 'users',//table name 
+            key: 'userName',//table column
          }
         }
       },
