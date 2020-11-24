@@ -9,7 +9,9 @@ module.exports = (app) => {
 
   router.post("/api/user/login", user.login);
 
-  router.post("/api/user/profile-upload", user.profile);
+  router.post("/api/user/profile-upload", user.profileUpload);
+
+  router.post("/api/user/profile", user.profileEdit);
 
   router.get("/api/user/user-info/:id", user.getUserInfo);
 
@@ -24,6 +26,8 @@ module.exports = (app) => {
   router.get("/api/journey/otherpage/:id", journey.otherJourney);
 
   router.get("/api/journey/detail/:id", journey.jourDetail);
+
+  router.post("/api/journey/upload", journey.journeyUpload);
 
   router.post("/api/follow/follow-check", follow.followCheck);
 

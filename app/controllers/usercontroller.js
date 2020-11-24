@@ -13,6 +13,8 @@ const _storage = multer.diskStorage({
 
 var upload = multer({ storage: _storage, limits:{fileSize: 1024 * 1024 * 5} }).single("userImg");
 
+var profilePath = "";
+
 exports.register = (req, res) => {
   const user = {
     userName: req.body.name,
@@ -27,33 +29,10 @@ exports.register = (req, res) => {
       res.send({ registerSuccess: true });
     })
     .catch((err) => {
-      res.status(500).send({
+      res.status(400).send({
         message: err.message || "Some error occurred while creating the User.",
       });
     });
-
-  // Users.findOne({where: {userName: req.body.name}})
-  //   .then((userInfo) => {
-  //     if(userInfo !== undefined) {
-  //       return res.json({
-  //         registerSuccess: false,
-  //         message: "이미 존재하는 이름입니다.",
-  //       });
-  //     } else {
-  //       Users.create(user)
-  //         .then(() => {
-  //           res.send({ registerSuccess: true });
-  //         })
-  //         .catch((err) => {
-  //           res.status(500).send({
-  //             message: err.message || "Some error occurred while creating the User.",
-  //           });
-  //         });
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     return res.status(400).send(err);
-  //   });
 };
 
 exports.login = (req, res) => {
@@ -123,21 +102,28 @@ exports.logout = (req, res) => {
     });
 };
 
-exports.profile = (req, res) => {
+exports.profileUpload = (req, res) => {
   upload(req, res, function (err) {
     if (err){
       console.log(JSON.stringify(err));
-      return res.status(400).send('fail saving image');
-    } else {
-      console.log('The filename is ' + res.req.file.filename);
-      Users.update({image: `/image/profile/${res.req.file.filename}`}, {where: {id: res.req.body.userId}})
-      .then(() => {return res.send({userImg: `/image/profile/${res.req.file.filename}`})})
-      .catch((err) => {
-        return res.status(400).send(err);
-      });
+      res.status(400).send('fail saving image');
+    } 
+    else {
+       profilePath = `image/profile/${res.req.file.filename}`;
+       res.send({filename:`image/profile/${res.req.file.filename}`});
+       res.status(200).end();
     }
   });
 };
+
+exports.profileEdit = (req, res) => {
+  Users.update({image: `/image/profile/PROFILE-1606032720010.png`}, {where: {id: req.body.id}})
+    .then(() => {return res.status(200).send({userImg: `/image/profile/PROFILE-1606032720010.png`})})
+    .catch((err) => {
+      return res.status(400).send(err);
+  });
+
+}
 
 exports.getUserInfo = (req, res) => {
   Users.findByPk(req.params.id)

@@ -6,7 +6,6 @@ module.exports = (sequelize, Sequelize) => {
         journeyName: {
           type: Sequelize.STRING(50),
           allowNull: false,
-          unique: true,
         },
         type: {
           type: Sequelize.STRING(100),

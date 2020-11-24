@@ -10,7 +10,7 @@ module.exports = (sequelize, Sequelize) => {
           type: Sequelize.STRING(50),
           allowNull: false,
         },
-        logitude: {
+        longitude: {
           type: Sequelize.STRING(50),
           allowNull: false,
         },
