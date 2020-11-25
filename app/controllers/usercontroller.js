@@ -26,7 +26,7 @@ exports.register = (req, res) => {
 
   Users.create(user)
     .then(() => {
-      res.send({ registerSuccess: true });
+      res.stauts(200).send({ registerSuccess: true });
     })
     .catch((err) => {
       res.status(400).send({
@@ -56,10 +56,14 @@ exports.login = (req, res) => {
             Users.update({ token: tok }, 
               { 
                 where: { email: req.body.email }, 
+                returning: true,
+                plain: true
               })
-              .then(() => {
+              .then((result) => {
                 res.cookie("x_auth", tok).status(200).json({
                   isLogin: true,
+                  userId: result[1].id,
+                  userName: result[1].userName
                 });
               })
               .catch((err) => {
