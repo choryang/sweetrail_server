@@ -63,7 +63,11 @@ exports.login = (req, res) => {
                 res.cookie("x_auth", tok).status(200).json({
                   isLogin: true,
                   userId: result[1].id,
-                  userName: result[1].userName
+                  userName: result[1].userName,
+                  lifeStyle: result[1].lifeStyle,
+                  journeyType: result[1].journeyType,
+                  userImg: result[1].image,
+                  token: result[1].token
                 });
               })
               .catch((err) => {
