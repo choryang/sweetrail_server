@@ -26,7 +26,7 @@ exports.register = (req, res) => {
 
   Users.create(user)
     .then(() => {
-      res.stauts(200).send({ registerSuccess: true });
+      res.status(200).send({ registerSuccess: true });
     })
     .catch((err) => {
       res.status(400).send({
