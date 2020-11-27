@@ -11,7 +11,7 @@ module.exports = (app) => {
 
   router.post("/api/user/profile-upload", user.profileUpload);
 
-  router.post("/api/user/profile", user.profileEdit);
+  //router.post("/api/user/profile", user.profileEdit);
 
   router.get("/api/user/user-info/:id", user.getUserInfo);
 

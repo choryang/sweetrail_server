@@ -110,28 +110,21 @@ exports.logout = (req, res) => {
     });
 };
 
-exports.profileUpload = (req, res) => {
+exports.profileUpload = (req, res, next) => {
   upload(req, res, function (err) {
     if (err){
       console.log(JSON.stringify(err));
-      res.status(400).send('fail saving image');
+      return res.status(400).send('fail saving image');
     } 
-    else {
-       profilePath = `image/profile/${res.req.file.filename}`;
-       res.send({filename:`image/profile/${res.req.file.filename}`});
-       res.status(200).end();
-    }
-  });
-};
-
-exports.profileEdit = (req, res) => {
-  Users.update({image: `/image/profile/PROFILE-1606032720010.png`}, {where: {id: req.body.id}})
-    .then(() => {return res.status(200).send({userImg: `/image/profile/PROFILE-1606032720010.png`})})
+    
+    Users.update({image: `/image/profile/${res.req.file.filename}`}, {where: {id: res.req.body.userId}})
+    .then(() => {return res.status(200).send({editProfile: true})})
     .catch((err) => {
       return res.status(400).send(err);
   });
-
-}
+    next();
+  });
+};
 
 exports.getUserInfo = (req, res) => {
   Users.findByPk(req.params.id)
