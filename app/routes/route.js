@@ -2,6 +2,7 @@ module.exports = (app) => {
   const user = require("../controllers/usercontroller.js");
   const journey = require("../controllers/journeycontroller.js");
   const follow = require("../controllers/followcontroller.js");
+  const scrap = require("../controllers/scrapcontroller.js");
   const { auth } = require("../middleware/auth.js");
   var router = require("express").Router();
 
@@ -44,6 +45,14 @@ module.exports = (app) => {
   router.get("/api/follow/count-following/:id", follow.countFollowing);
 
   router.get("/api/follow/count-follower/:id", follow.countFollower);
+
+  router.post("/api/scrap/scrap-check", scrap.scrapCheck);
+
+  router.post("/api/scrap/set-scrap", scrap.setScrap);
+
+  router.post("/api/scrap/unscrap", scrap.unScrap);
+
+  router.get("/api/scrap/get-scrap-list/:id", scrap.getScrapList);
 
   app.use("/", router);
 };
