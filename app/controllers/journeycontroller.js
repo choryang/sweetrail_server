@@ -37,7 +37,10 @@ exports.jourDetail = (req, res) => {
     Journeys.findByPk(req.params.id).then((jourInfo) => {
         return res.status(200).send(jourInfo);
     })
-    .catch((err) => {return res.status(400).send(err);})
+    .catch((err) => {return res.status(400).send({
+        message: err.message || "Some error occurred while searching journey detail.",
+        });
+    })
 }
 
 exports.myJourney = (req, res) => {
