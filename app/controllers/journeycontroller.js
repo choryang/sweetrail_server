@@ -1,5 +1,6 @@
 const db = require("../models");
 const Journeys = db.journeys;
+const Follows = db.follows;
 const path = require("path");
 const multer = require("multer");
 const _storage = multer.diskStorage({
@@ -69,6 +70,21 @@ exports.myJourney = (req, res) => {
 exports.otherJourney = (req, res) => {
     Journeys.findAll({where: {userId: req.params.id, sharedFlag: true}}).then((jourInfo) => {
         return res.status(200).send(jourInfo);
+    })
+    .catch((err) => {return res.status(400).send(err);})
+}
+
+exports.followJourney = (req, res) => {
+    var followList = [];
+    Follows.findAll({where: {userId: req.params.id}})
+    .then((followInfo) => {
+        followInfo.map((follow) => {
+            followList.push(follow.followingId);
+        });
+        Journeys.findAll({where: {userId: followList, sharedFlag: true}}).then((jourInfo) => {
+            return res.status(200).send(jourInfo);
+        })
+        .catch((err) => {return res.status(400).send(err);})
     })
     .catch((err) => {return res.status(400).send(err);})
 }

@@ -21,6 +21,8 @@ module.exports = (app) => {
 
   router.get("/api/journey/main", journey.publicJour);
 
+  router.get("/api/journey/follow-journey/:id", journey.followJourney);
+
   router.get("/api/journey/mypage/:id", journey.myJourney);
 
   router.get("/api/journey/otherpage/:id", journey.otherJourney);
