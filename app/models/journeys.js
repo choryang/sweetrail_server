@@ -24,7 +24,7 @@ module.exports = (sequelize, Sequelize) => {
         },
         image: {
           type: Sequelize.STRING(200),
-          defaultValue: `/image/journey/default.png`
+          defaultValue: `/image/journey/default.jpg`
         },
         status: {
           type: Sequelize.BOOLEAN,
