@@ -13,8 +13,6 @@ const _storage = multer.diskStorage({
 
 var upload = multer({ storage: _storage, limits:{fileSize: 1024 * 1024 * 5} }).single("userImg");
 
-var profilePath = "";
-
 exports.register = (req, res) => {
   const user = {
     userName: req.body.name,

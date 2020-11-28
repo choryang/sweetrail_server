@@ -1,5 +1,17 @@
 const db = require("../models");
 const Journeys = db.journeys;
+const path = require("path");
+const multer = require("multer");
+const _storage = multer.diskStorage({
+  destination: function(req, file, cb){
+    cb(null, "uploads/journey/");
+  },
+  filename: function(req, file, cb){
+      cb(null, "JOURNEY-" + Date.now() + path.extname(file.originalname));
+  }
+});
+
+var upload = multer({ storage: _storage, limits:{fileSize: 1024 * 1024 * 5} }).single("image");
 
 exports.journeyUpload = (req, res) => {
     const journey = {
@@ -27,7 +39,11 @@ exports.journeyUpload = (req, res) => {
 }
 
 exports.publicJour = (req, res) => {
-    Journeys.findAll({where: {sharedFlag: true}}).then((jourInfo) => {
+    Journeys.findAll({
+        where: {sharedFlag: true},
+        limit: 2,
+        order: [["id", "DESC"]]
+    }).then((jourInfo) => {
         return res.status(200).send(jourInfo);
     })
     .catch((err) => {return res.status(400).send(err);})
