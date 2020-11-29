@@ -29,8 +29,8 @@ exports.journeyUpload = (req, res) => {
     };
     
     Journeys.create(journey)
-    .then(() => {
-        return res.status(200).send({ uploadSuccess: true });
+    .then((journey) => {
+        return res.status(200).send({ uploadSuccess: true, journeyId: journey.id });
     })
     .catch((err) => {
         return res.status(400).send({
