@@ -110,12 +110,22 @@ exports.logout = (req, res) => {
 
 exports.profileUpload = (req, res, next) => {
   upload(req, res, function (err) {
+    var imagePath = "";
     if (err){
       console.log(JSON.stringify(err));
       return res.status(400).send('fail saving image');
     } 
     
-    Users.update({image: `/image/profile/${res.req.file.filename}`}, {where: {id: res.req.body.userId}})
+    if(res.req.body.default === "true") {
+      imagePath = "/image/profile/default.png";
+    }
+    else {
+      imagePath = `/image/profile/${res.req.file.filename}`;
+    }
+
+    Users.update({
+      image: imagePath
+    }, {where: {id: res.req.body.userId}})
     .then(() => {return res.status(200).send({editProfile: true})})
     .catch((err) => {
       return res.status(400).send(err);
